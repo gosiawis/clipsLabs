@@ -45,7 +45,6 @@
     (matka ?x ?y)))
     =>
     (assert (syn ?y ?x))
-    (printout t ?y " jest synem " ?x crlf)
 )
 
 (defrule reg2 "corka"
@@ -54,27 +53,6 @@
     (matka ?x ?y)))
     =>
     (assert (corka ?y ?x))
-    (printout t ?y " jest corka " ?x crlf)
-)
-
-(defrule reg3 "dziadek"
-    (and (m ?x)
-    (ojciec ?x ?y)
-    (or (ojciec ?y ?z)
-    (matka ?y ?z)))
-    =>
-    (assert (dziadek ?x ?z))
-    (printout t ?x " jest dziadkiem " ?z crlf)
-)
-
-(defrule reg4 "babcia"
-    (and (k ?x)
-    (matka ?x ?y)
-    (or (ojciec ?y ?z)
-    (matka ?y ?z)))
-    =>
-    (assert (babcia ?x ?z))
-    (printout t ?x " jest babcia " ?z crlf)
 )
 
 (defrule reg5 "wnuczka"
@@ -85,7 +63,6 @@
     (ojciec ?z ?y)))
     =>
     (assert (wnuczka ?x ?z))
-    (printout t ?x " jest wnuczka " ?z crlf)
 )
 
 (defrule reg6 "wnuczek"
@@ -96,53 +73,6 @@
     (ojciec ?z ?y)))
     =>
     (assert (wnuczek ?x ?z))
-    (printout t ?x " jest wnuczkiem " ?z crlf)
-)
-
-(defrule reg7 "brat"
-    (and (m ?x)
-    (or (matka ?y ?x)
-    (ojciec ?y ?x))
-    (or (matka ?y ?z)
-    (ojciec ?y ?z))
-    (test (neq ?x ?z)))
-    =>
-    (assert (brat ?x ?z))
-    (printout t ?x " jest bratem " ?z crlf)
-)
-
-(defrule reg8 "siostra"
-    (and (k ?x)
-    (or (matka ?y ?x)
-    (ojciec ?y ?x))
-    (or (matka ?y ?z)
-    (ojciec ?y ?z))
-    (test (neq ?x ?z)))
-    =>
-    (assert (siostra ?x ?z))
-    (printout t ?x " jest siostra " ?z crlf)
-)
-
-(defrule reg9 "przodek"
-    (or 
-        (matka ?x ?y)
-        (ojciec ?x ?y)
-        (dziadek ?x ?y)
-        (babcia ?x ?y)
-        (and
-            (or
-                (ojciec ?x ?z)
-                (matka ?x ?z)
-            )
-            (or
-                (dziadek ?z ?y)
-                (babcia ?z ?y)
-            )
-        )
-    )
-    =>
-    (assert (przodek ?x ?y))
-    (printout t ?x " jest przodkiem " ?y crlf)
 )
 
 (defrule reg10 "potomek"
