@@ -125,21 +125,22 @@
 
 (defrule reg9 "przodek"
     (or 
-        (matka ?x ?y)
-        (ojciec ?x ?y)
-        (dziadek ?x ?y)
-        (babcia ?x ?y)
+        (or
+            (matka ?x ?y)
+            (ojciec ?x ?y)
+            (dziadek ?x ?y)
+            (babcia ?x ?y)
+            (corka ?y ?x)
+            (syn ?y ?x)
+            (wnuk ?y ?x)
+            (wnuczka ?y ?x)
+        )
         (and
-            (or
-                (ojciec ?x ?z)
-                (matka ?x ?z)
-            )
-            (or
-                (dziadek ?z ?y)
-                (babcia ?z ?y)
-            )
+            (przodek ?x ?z)
+            (przodek ?z ?y)
         )
     )
+    (not (przodek ?x ?y))
     =>
     (assert (przodek ?x ?y))
     (printout t ?x " jest przodkiem " ?y crlf)
@@ -147,21 +148,22 @@
 
 (defrule reg10 "potomek"
     (or 
-        (corka ?x ?y)
-        (syn ?x ?y)
-        (wnuczek ?x ?y)
-        (wnuczka ?x ?y)
+        (or
+            (matka ?x ?y)
+            (ojciec ?x ?y)
+            (dziadek ?x ?y)
+            (babcia ?x ?y)
+            (corka ?y ?x)
+            (syn ?y ?x)
+            (wnuk ?y ?x)
+            (wnuczka ?y ?x)
+        )
         (and
-            (or
-                (wnuczek ?x ?z)
-                (wnuczka ?x ?z)
-            )
-            (or
-                (syn ?z ?y)
-                (corka ?z ?y)
-            )
+            (potomek ?x ?z)
+            (potomek ?z ?y)
         )
     )
+    (not (potomek ?x ?y))
     =>
     (assert (potomek ?x ?y))
     (printout t ?x " jest potomkiem " ?y crlf)
