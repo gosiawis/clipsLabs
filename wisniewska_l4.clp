@@ -104,7 +104,8 @@
     (or (matka ?y ?x)
     (ojciec ?y ?x))
     (or (matka ?y ?z)
-    (ojciec ?y ?z)))
+    (ojciec ?y ?z))
+    (test (neq ?x ?z)))
     =>
     (assert (brat ?x ?z))
     (printout t ?x " jest bratem " ?z crlf)
@@ -115,8 +116,53 @@
     (or (matka ?y ?x)
     (ojciec ?y ?x))
     (or (matka ?y ?z)
-    (ojciec ?y ?z)))
+    (ojciec ?y ?z))
+    (test (neq ?x ?z)))
     =>
     (assert (siostra ?x ?z))
     (printout t ?x " jest siostra " ?z crlf)
+)
+
+(defrule reg9 "przodek"
+    (or 
+        (matka ?x ?y)
+        (ojciec ?x ?y)
+        (dziadek ?x ?y)
+        (babcia ?x ?y)
+        (and
+            (or
+                (ojciec ?x ?z)
+                (matka ?x ?z)
+            )
+            (or
+                (dziadek ?z ?y)
+                (babcia ?z ?y)
+            )
+        )
+    )
+    =>
+    (assert (przodek ?x ?y))
+    (printout t ?x " jest przodkiem " ?y crlf)
+)
+
+(defrule reg10 "potomek"
+    (or 
+        (corka ?x ?y)
+        (syn ?x ?y)
+        (wnuczek ?x ?y)
+        (wnuczka ?x ?y)
+        (and
+            (or
+                (wnuczek ?x ?z)
+                (wnuczka ?x ?z)
+            )
+            (or
+                (syn ?z ?y)
+                (corka ?z ?y)
+            )
+        )
+    )
+    =>
+    (assert (potomek ?x ?y))
+    (printout t ?x " jest potomkiem " ?y crlf)
 )
